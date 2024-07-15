@@ -1,3 +1,20 @@
+document.addEventListener('DOMContentLoaded', function() {
+  var modal = document.getElementById('passwordModal');
+  modal.style.display = 'block';
+
+  var submitButton = document.getElementById('submitPassword');
+  submitButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    var passwordInput = document.getElementById('passwordInput').value;
+    if (passwordInput === 'Meow <3') {
+      modal.style.display = 'none';
+    } else {
+      alert('Incorrect password. Please try again.');
+    }
+  });
+});
+
 document.getElementsByClassName("cls")[0].addEventListener("click", (e) => {
   e.preventDefault();
 
@@ -102,4 +119,48 @@ function generatePDF() {
   doc.text(`Net Profit: ${netProfit.toFixed(2)} ${currency}`, 10, 140);
 
   doc.save(`${handle}_Profit_Calculation.pdf`);
+}
+
+function sendEmail() {
+  const handle = document.getElementById('name').value;
+  const danaRate = document.getElementById('danaRate').value;
+  const weight = document.getElementById('weight').value;
+  const shotNo = document.getElementById('shotNo').value;
+  const pieceNo = document.getElementById('pieceNo').value;
+  const pieceRate = document.getElementById('pieceRate').value;
+  const units = document.getElementById('units').value;
+  const unitsCost = document.getElementById('unitsCost').value;
+  const labourCharge = document.getElementById('labour').value;
+  const extra = document.getElementById('extra').value;
+  const email = document.getElementById('email').value;
+
+  const grossPiecePrice = shotNo * pieceNo * pieceRate;
+  const grossDanaPrice = (weight * shotNo * danaRate) / 1000;
+  const grossBijliPrice = units * unitsCost;
+  const netProfit = grossPiecePrice - grossDanaPrice - grossBijliPrice - labourCharge - extra;
+
+  const emailParams = {
+    handle: handle,
+    danaRate: danaRate,
+    weight: weight,
+    shotNo: shotNo,
+    pieceNo: pieceNo,
+    pieceRate: pieceRate,
+    units: units,
+    unitsCost: unitsCost,
+    labourCharge: labourCharge,
+    extra: extra,
+    grossPiecePrice: grossPiecePrice,
+    grossDanaPrice: grossDanaPrice,
+    grossBijliPrice: grossBijliPrice,
+    netProfit: netProfit,
+    email: email,
+  };
+
+  emailjs.send('your_service_id', 'your_template_id', emailParams)
+    .then(function(response) {
+      alert('Email sent successfully!');
+    }, function(error) {
+      alert('Failed to send email. Error: ' + JSON.stringify(error));
+    });
 }
