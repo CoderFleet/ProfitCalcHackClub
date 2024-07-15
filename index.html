@@ -79,6 +79,15 @@
                 <input type="number" class="form-control" id="labour" placeholder="Enter Labour's One Day Cost..." required />
             </div>
             <div class="mb-3">
+                <label for="currency">Currency</label>
+                <select class="custom-select" id="currency">
+                  <option value="INR" selected>INR</option>
+                  <option value="USD">USD</option>
+                  <option value="EUR">EUR</option>
+                  <option value="GBP">GBP</option>
+                </select>
+            </div>
+            <div class="mb-3">
                 <button type="submit" class="btn btn-primary">Find Profit</button>
                 <button class="btn btn-danger cls">Clear Fields</button>
                 <button type="button" class="btn btn-secondary" id="generatePDF">Generate PDF</button>
