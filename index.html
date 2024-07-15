@@ -1,148 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Profit Calculator</title>
-  <link rel="stylesheet" href="./CSS/Bootstrap.css" />
-  <style>
-    * {
-      font-family: "Poppins", sans-serif;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profit Calculator</title>
+    <link rel="stylesheet" href="./CSS/Bootstrap.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <style>
+        * {
+            font-family: "Poppins", sans-serif;
+        }
+    </style>
 </head>
-
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Profit-Calculator</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#"
-            >Single Piece Mould<span class="sr-only">(current)</span></a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="./Hybrid.html">Hybrid Mould</a>
-        </li>
-      </ul>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Profit-Calculator</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Single Piece Mould<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./Hybrid.html">Hybrid Mould</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="my-lg-3 container form-label">
+        <form class="mainForm">
+            <div class="mb-3">
+                <label for="name">Handle Name</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter Name Of Handle..." required />
+            </div>
+            <div class="mb-3">
+                <label for="weight">Weight Of 1 Shot(gm)</label>
+                <input type="number" class="form-control" id="weight" placeholder="Enter Weight Of Handle..." required />
+            </div>
+            <div class="mb-3">
+                <label for="shotNo">No Of Shots</label>
+                <input type="number" class="form-control" id="shotNo" placeholder="Enter No of Shots..." required />
+            </div>
+            <div class="mb-3">
+                <label for="pieceNo"> Pieces In 1 Shot </label>
+                <input type="number" class="form-control" id="pieceNo" placeholder="Enter No of Pieces Produced..." required />
+            </div>
+            <div class="mb-3">
+                <label for="pieceRate">Cost Of 1 Piece (₹)</label>
+                <select class="custom-select" id="pieceRate" required>
+                    <option selected value="">Select Price Of Piece</option>
+                    <option value="1.01">₹1.01</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="units">Electricity (Units)</label>
+                <input type="number" class="form-control" id="units" placeholder="Enter No Of Units Consumed..." required />
+            </div>
+            <div class="mb-3">
+                <label for="danaRate">Rate Of Raw Material(Dana) (₹)</label>
+                <input type="number" class="form-control" id="danaRate" placeholder="Enter Rate Of Raw Material..." required />
+            </div>
+            <div class="mb-3">
+                <label for="extra">Extra (Including Maintenance and Bike) (₹)</label>
+                <input type="number" class="form-control" id="extra" placeholder="Enter Extra Cost..." required />
+            </div>
+            <div class="mb-3">
+                <label for="unitsCost">Cost Of 1 Unit (₹)</label>
+                <select class="custom-select" id="unitsCost" required>
+                    <option selected value="">Select Price...</option>
+                    <option value="6.50">₹6.50</option>
+                    <option value="5.80">₹5.80</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="labour">Labour Charge (₹)</label>
+                <input type="number" class="form-control" id="labour" placeholder="Enter Labour's One Day Cost..." required />
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Find Profit</button>
+                <button class="btn btn-danger cls">Clear Fields</button>
+                <button type="button" class="btn btn-secondary" id="generatePDF">Generate PDF</button>
+            </div>
+        </form>
+        <div class="output">
+            <h2>Profit 👇</h2>
+            <h4 id="output">Plz Submit The Form To Get Profit</h4>
+        </div>
+        <div id="calculationArea"></div>
     </div>
-  </nav>
-  <div class="my-lg-3 container form-label">
-    <form class="mainForm">
-      <div class="mb-3">
-        <label for="name">Handle Name</label>
-        <input
-          type="text"
-          class="form-control"
-          id="name"
-          placeholder="Enter Name Of Handle..."
-        />
-      </div>
-      <div class="mb-3">
-        <label for="weight">Weight Of 1 Shot(gm)</label>
-        <input
-          type="number"
-          class="form-control"
-          id="weight"
-          placeholder="Enter Weight Of Handle..."
-        />
-      </div>
-      <div class="mb-3">
-        <label for="shotNo">No Of Shots</label>
-        <input
-          type="number"
-          class="form-control"
-          id="shotNo"
-          placeholder="Enter Weight Of Handle..."
-        />
-      </div>
-      <div class="mb-3">
-        <label for="pieceNo"> Pieces In 1 Shot </label>
-        <input
-          type="number"
-          class="form-control"
-          id="pieceNo"
-          placeholder="Enter No of Pieces Produced..."
-        />
-      </div>
-      <div class="mb-3">
-        <label for="pieceRate">Cost Of 1 Piece (₹)</label>
-        <select class="custom-select" id="pieceRate">
-          <option selected value="">Select Price Of Piece</option>
-          <option value="1.01">₹1.01</option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="units">Electricity (Units)</label>
-        <input
-          type="number"
-          class="form-control"
-          id="units"
-          placeholder="Enter No Of Units Consumed..."
-        />
-      </div>
-      <div class="mb-3">
-        <label for="danaRate">Rate Of Raw Material(Dana) (₹)</label>
-        <input
-          type="number"
-          class="form-control"
-          id="danaRate"
-          placeholder="Enter No Of Units Consumed..."
-        />
-      </div>
-      <div class="mb-3">
-        <label for="extra">Extra (Including Maintenance and Bike) (₹)</label>
-        <input
-          type="number"
-          class="form-control"
-          id="extra"
-          placeholder="Enter Here..."
-        />
-      </div>
-      <div class="mb-3">
-        <label for="unitsCost">Cost Of 1 Unit (₹)</label>
-        <select class="custom-select" id="unitsCost">
-          <option selected value="">Select Price...</option>
-          <option value="6.50">₹6.50</option>
-          <option value="5.80">₹5.80</option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="labour">Labour Charge (₹)</label>
-        <input
-          type="number"
-          class="form-control"
-          id="labour"
-          placeholder="Enter Labour's One Day Cost..."
-        />
-      </div>
-      <div class="mb-3">
-        <button type="submit" class="btn btn-primary">Find Profit</button>
-        <button class="btn btn-danger cls">Clear Fields</button>
-      </div>
-    </form>
-
-    <div class="output">
-      <h2>Profit 👇</h2>
-      <h4 id="output">Plz Submit The Form To Get Profit</h4>
-    </div>
-
-    <div id="calculationArea"></div>
-  </div>
-  <script src="./Js/Main.js" defer></script>
+    <script src="./Js/Main.js" defer></script>
 </body>
 </html>
