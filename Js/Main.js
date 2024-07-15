@@ -1,3 +1,64 @@
+function exportToExcel() {
+  const handle = document.getElementById('name').value;
+  const danaRate = document.getElementById('danaRate').value;
+  const weight = document.getElementById('weight').value;
+  const shotNo = document.getElementById('shotNo').value;
+  const pieceNo = document.getElementById('pieceNo').value;
+  const pieceRate = document.getElementById('pieceRate').value;
+  const units = document.getElementById('units').value;
+  const unitsCost = document.getElementById('unitsCost').value;
+  const labourCharge = document.getElementById('labour').value;
+  const extra = document.getElementById('extra').value;
+
+  const data = [
+    ["Handle Name", "Dana Rate", "Weight", "Shot No", "Piece No", "Piece Rate", "Units", "Units Cost", "Labour Charge", "Extra"],
+    [handle, danaRate, weight, shotNo, pieceNo, pieceRate, units, unitsCost, labourCharge, extra]
+  ];
+
+  const worksheet = XLSX.utils.aoa_to_sheet(data);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Calculation");
+
+  XLSX.writeFile(workbook, "calculation.xlsx");
+}
+
+document.getElementById('exportExcel').addEventListener('click', exportToExcel);
+
+
+
+function exportToCsv() {
+  const handle = document.getElementById('name').value;
+  const danaRate = document.getElementById('danaRate').value;
+  const weight = document.getElementById('weight').value;
+  const shotNo = document.getElementById('shotNo').value;
+  const pieceNo = document.getElementById('pieceNo').value;
+  const pieceRate = document.getElementById('pieceRate').value;
+  const units = document.getElementById('units').value;
+  const unitsCost = document.getElementById('unitsCost').value;
+  const labourCharge = document.getElementById('labour').value;
+  const extra = document.getElementById('extra').value;
+
+  const rows = [
+    ["Handle Name", "Dana Rate", "Weight", "Shot No", "Piece No", "Piece Rate", "Units", "Units Cost", "Labour Charge", "Extra"],
+    [handle, danaRate, weight, shotNo, pieceNo, pieceRate, units, unitsCost, labourCharge, extra]
+  ];
+
+  let csvContent = "data:text/csv;charset=utf-8," 
+    + rows.map(e => e.join(",")).join("\n");
+
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "calculation.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+document.getElementById('exportCsv').addEventListener('click', exportToCsv);
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
   var modal = document.getElementById('passwordModal');
   modal.style.display = 'block';
