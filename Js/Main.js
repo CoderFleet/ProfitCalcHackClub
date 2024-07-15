@@ -15,6 +15,52 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+document.getElementById('saveCalc').addEventListener('click', function() {
+  const handle = document.getElementById('name').value;
+  const danaRate = document.getElementById('danaRate').value;
+  const weight = document.getElementById('weight').value;
+  const shotNo = document.getElementById('shotNo').value;
+  const pieceNo = document.getElementById('pieceNo').value;
+  const pieceRate = document.getElementById('pieceRate').value;
+  const units = document.getElementById('units').value;
+  const unitsCost = document.getElementById('unitsCost').value;
+  const labourCharge = document.getElementById('labour').value;
+  const extra = document.getElementById('extra').value;
+
+  if (!handle || !danaRate || !weight || !shotNo || !pieceNo || !pieceRate || !units || !unitsCost || !labourCharge || !extra) {
+    alert('Please fill out all fields before saving.');
+    return;
+  }
+
+  const calculation = {
+    handle, danaRate, weight, shotNo, pieceNo, pieceRate, units, unitsCost, labourCharge, extra
+  };
+
+  localStorage.setItem('savedCalculation', JSON.stringify(calculation));
+  alert('Calculation saved successfully!');
+});
+
+document.getElementById('loadCalc').addEventListener('click', function() {
+  const savedCalculation = JSON.parse(localStorage.getItem('savedCalculation'));
+
+  if (savedCalculation) {
+    document.getElementById('name').value = savedCalculation.handle;
+    document.getElementById('danaRate').value = savedCalculation.danaRate;
+    document.getElementById('weight').value = savedCalculation.weight;
+    document.getElementById('shotNo').value = savedCalculation.shotNo;
+    document.getElementById('pieceNo').value = savedCalculation.pieceNo;
+    document.getElementById('pieceRate').value = savedCalculation.pieceRate;
+    document.getElementById('units').value = savedCalculation.units;
+    document.getElementById('unitsCost').value = savedCalculation.unitsCost;
+    document.getElementById('labour').value = savedCalculation.labourCharge;
+    document.getElementById('extra').value = savedCalculation.extra;
+    alert('Calculation loaded successfully!');
+  } else {
+    alert('No saved calculation found.');
+  }
+});
+
+
 document.getElementsByClassName("cls")[0].addEventListener("click", (e) => {
   e.preventDefault();
 
